@@ -13,8 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "notices", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
-public class Notices {
-
+public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
