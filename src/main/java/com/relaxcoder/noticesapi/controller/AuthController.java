@@ -1,5 +1,7 @@
 package com.relaxcoder.noticesapi.controller;
 
+import com.relaxcoder.noticesapi.dtos.JwtAuthResponse;
+import com.relaxcoder.noticesapi.dtos.LoginDto;
 import com.relaxcoder.noticesapi.dtos.RegisterDto;
 import com.relaxcoder.noticesapi.service.AuthService;
 import jakarta.validation.Valid;
@@ -19,6 +21,13 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @PostMapping(value = {"/login", "/signin"})
+    public ResponseEntity<JwtAuthResponse> login(@Valid @RequestBody LoginDto loginDto){
+        String token = authService.loginUser(loginDto);
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setAccessToken(token);;
+        return ResponseEntity.ok(jwtAuthResponse);
+    }
     @PostMapping(value = {"/register", "/signup"})
     public ResponseEntity<String> register(@Valid @RequestBody RegisterDto registerDto){
         String response = authService.registerUser(registerDto);
