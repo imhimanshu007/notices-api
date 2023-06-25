@@ -24,4 +24,6 @@ public class RegisterDto {
     private String email;
     @Size(min = 8, message = "Password should be at least 8 Characters Long")
     private String password;
+    @NotEmpty
+    private String role;
 }

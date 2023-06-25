@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,6 +57,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String registerUser(RegisterDto registerDto) {
+
         if(userRepository.existsByUsername(registerDto.getUsername())){
             throw new CustomException(HttpStatus.BAD_REQUEST, "Username already exist");
         }
@@ -64,16 +66,17 @@ public class AuthServiceImpl implements AuthService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "Email Already Exits");
         }
 
-        Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName("ROLE_USER").get();
-        roles.add(userRole);
+        String role = registerDto.getRole().toUpperCase();
+
+        Role userRole = (role.equals("ADMIN")) ? roleRepository.findByName("ROLE_ADMIN").get() :
+                roleRepository.findByName("ROLE_USER").get();
 
         User user = User.builder()
                 .name(registerDto.getName())
                 .email(registerDto.getEmail())
                 .username(registerDto.getUsername())
-                .password(registerDto.getPassword())
-                .roles(roles)
+                .password(passwordEncoder.encode(registerDto.getPassword()))
+                .roles(Collections.singleton(userRole))
                 .build();
 
         userRepository.save(user);
