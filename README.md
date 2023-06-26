@@ -22,12 +22,12 @@
 ## Post request to login user/admin
 
 - Using Postman make a Post Request to http://localhost:8080/api/v1/auth/login
-    - Your may login either using email or password
+    - Your may login either using username or email
 - Go to Body Choose RAW then JSON and then provide the details in below format
 
   { \
-  "usernameOrEmail" : "himanshu24", \
-  "password" : "password123" \
+  "usernameOrEmail" : "{Your Username}", \
+  "password" : "{Your password}" \
   }
 - Once login is done JW Token will be received in response
     - Pass this token for every subsequent request by going to Postman
