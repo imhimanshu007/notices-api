@@ -22,7 +22,7 @@ public class NoticeController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("post")
+    @PostMapping("createNotice")
     public ResponseEntity<NoticeDto> createNotice(@Valid @RequestBody NoticeDto noticeDto){
         return new ResponseEntity<NoticeDto>(noticeService.createNotice(noticeDto), HttpStatus.CREATED);
     }
